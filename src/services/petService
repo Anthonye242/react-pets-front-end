@@ -50,5 +50,4 @@ const deletePet = async (petId) => {
   }
 };
 
-export { create, updatePet, deletePet };
-export { index };
+export { index,create, updatePet, deletePet };

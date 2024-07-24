@@ -1,11 +1,15 @@
-import './App.css';
+// src/App.jsx
+
 import { useState, useEffect } from 'react';
+import './App.css';
+
 import * as petService from './services/petService';
-import PetList from './components/PetList';
+
 import PetDetail from './components/PetDetail';
 import PetForm from './components/PetForm';
+import PetList from './components/PetList';
 
-const App = () => {
+function App() {
   const [petList, setPetList] = useState([]);
   const [selected, setSelected] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -27,13 +31,13 @@ const App = () => {
     fetchPets();
   }, []);
 
-  const updateSelected = (pet) => {
-    setSelected(pet);
+  const handleFormView = (pet) => {
+    if (!pet.name) setSelected(null);
+    setIsFormOpen(!isFormOpen);
   };
 
-  const handleFormView = (pet) => {
-    if (!pet?.name) setSelected(null);
-    setIsFormOpen(!isFormOpen);
+  const updateSelected = (pet) => {
+    setSelected(pet);
   };
 
   const handleAddPet = async (formData) => {
@@ -54,15 +58,14 @@ const App = () => {
   const handleUpdatePet = async (formData, petId) => {
     try {
       const updatedPet = await petService.updatePet(formData, petId);
-  
+
       if (updatedPet.error) {
         throw new Error(updatedPet.error);
       }
-  
+
       const updatedPetList = petList.map((pet) =>
         pet._id !== updatedPet._id ? pet : updatedPet
       );
-  
       setPetList(updatedPetList);
       setSelected(updatedPet);
       setIsFormOpen(false);
@@ -79,7 +82,7 @@ const App = () => {
         throw new Error(deletedPet.error);
       }
 
-      setPetList(petList.filter((pet) => pet._id !== petId));
+      setPetList(petList.filter((pet) => pet._id !== deletedPet._id));
       setSelected(null);
       setIsFormOpen(false);
     } catch (error) {
@@ -110,6 +113,6 @@ const App = () => {
       )}
     </>
   );
-};
+}
 
 export default App;
