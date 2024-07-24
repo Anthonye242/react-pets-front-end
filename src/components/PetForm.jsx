@@ -12,7 +12,7 @@ const PetForm = (props) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  const handleSubmitForm = (evt) => {
+  const handleSubmit= (evt) => {
     evt.preventDefault();
     if (props.selected) {
       // Don't forget to pass both formData and the ._id!
@@ -20,12 +20,13 @@ const PetForm = (props) => {
     } else {
       props.handleAddPet(formData);
     }
+    // Reset the form to the initial state after submission
+    setFormData(initialState);
   };
-
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name"> Name </label>
         <input
           id="name"
