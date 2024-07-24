@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import * as petService from './services/petServices';
+import * as petService from './services/petService';
 import PetList from './components/PetList';
 import PetDetail from './components/PetDetail';
 import PetForm from './components/PetForm';
